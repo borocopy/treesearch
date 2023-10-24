@@ -25,6 +25,8 @@ void TreeSearch::initUI() {
 
 void TreeSearch::initFSModel() {
   QString homePath = qgetenv("HOME");
+  // Offload it to a thread, show user a spinner while loading
   fsModel = new TSFSModel(homePath);
   fsTreeView->setModel(fsModel);
+  fsTreeView->setUniformRowHeights(true);
 }

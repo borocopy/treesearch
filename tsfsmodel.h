@@ -15,6 +15,8 @@ public:
 private:
   QDir *rootDir;
   QStandardItem *rootElement;
+  QStandardItem *findElementByAbsolutePath(const QString &path,
+                                           QStandardItem *item);
 };
 
 #endif // TSFSMODEL_H
