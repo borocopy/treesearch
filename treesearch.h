@@ -5,8 +5,8 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "tsfsmodel.h"
 #include "tsheader.h"
-// #include "tsfsmodel.h"
 
 class TreeSearch : public QWidget {
   Q_OBJECT
@@ -25,6 +25,6 @@ private:
   QTreeView *fsTreeView;
 
   void initFSModel();
-  // TSFSModel *fsModel;
+  TSFSModel *fsModel;
 };
 #endif // TREESEARCH_H

@@ -1,6 +1,9 @@
 #include "treesearch.h"
 
-TreeSearch::TreeSearch(QWidget *parent) : QWidget(parent) { initUI(); }
+TreeSearch::TreeSearch(QWidget *parent) : QWidget(parent) {
+  initUI();
+  initFSModel();
+}
 
 TreeSearch::~TreeSearch() {}
 
@@ -18,4 +21,10 @@ void TreeSearch::initUI() {
   centralLayout->addWidget(fsTreeView);
 
   setLayout(centralLayout);
+}
+
+void TreeSearch::initFSModel() {
+  QString homePath = qgetenv("HOME");
+  fsModel = new TSFSModel(homePath);
+  fsTreeView->setModel(fsModel);
 }
