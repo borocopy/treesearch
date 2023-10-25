@@ -7,6 +7,7 @@
 
 #include "tsfsmodel.h"
 #include "tsfssortfilterproxymodel.h"
+#include "tsfsworker.h"
 #include "tsheader.h"
 
 class TreeSearch : public QWidget {
@@ -18,6 +19,7 @@ public:
 
 public slots:
   void on_filterQuerySubmitted(const QString &query);
+  void on_fsTreeHasBeenBuilt();
 
 private:
   // Build UI

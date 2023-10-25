@@ -27,10 +27,24 @@ void TreeSearch::initUI() {
 
 void TreeSearch::initFSModel() {
   QString homePath = qgetenv("HOME");
-  // Offload it to a thread, show user a spinner while loading
   fsModel = new TSFSModel(homePath);
   fsProxyModel = new TSFSSortFilterProxyModel();
 
+  // Build FS tree in another thread
+  QThread *fsWorkerThread = new QThread();
+  TSFSWorker *fsWorker = new TSFSWorker(fsModel);
+  fsWorker->moveToThread(fsWorkerThread);
+
+  connect(fsWorkerThread, &QThread::started, fsWorker,
+          &TSFSWorker::buildFSTree);
+  // FS tree built hook
+  connect(fsWorker, &TSFSWorker::fsTreeHasBeenBuilt, this,
+          &TreeSearch::on_fsTreeHasBeenBuilt);
+
+  fsWorkerThread->start();
+}
+
+void TreeSearch::on_fsTreeHasBeenBuilt() {
   fsProxyModel->setSourceModel(fsModel);
   fsTreeView->setModel(fsProxyModel);
   fsTreeView->setUniformRowHeights(true);
