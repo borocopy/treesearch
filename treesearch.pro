@@ -19,11 +19,13 @@ SOURCES += \
     main.cpp \
     treesearch.cpp \
     tsfsmodel.cpp \
+    tsfssortfilterproxymodel.cpp \
     tsheader.cpp
 
 HEADERS += \
     treesearch.h \
     tsfsmodel.h \
+    tsfssortfilterproxymodel.h \
     tsheader.h
 
 # Default rules for deployment.

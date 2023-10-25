@@ -6,6 +6,7 @@
 #include <QWidget>
 
 #include "tsfsmodel.h"
+#include "tsfssortfilterproxymodel.h"
 #include "tsheader.h"
 
 class TreeSearch : public QWidget {
@@ -14,6 +15,9 @@ class TreeSearch : public QWidget {
 public:
   TreeSearch(QWidget *parent = nullptr);
   ~TreeSearch();
+
+public slots:
+  void on_filterQuerySubmitted(const QString &query);
 
 private:
   // Build UI
@@ -24,7 +28,10 @@ private:
   TSHeader *header;
   QTreeView *fsTreeView;
 
+  // File System model
   void initFSModel();
   TSFSModel *fsModel;
+  // Proxy model for filtering
+  TSFSSortFilterProxyModel *fsProxyModel;
 };
 #endif // TREESEARCH_H

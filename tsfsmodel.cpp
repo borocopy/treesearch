@@ -21,7 +21,7 @@ TSFSModel::TSFSModel(const QString &rootPath, QObject *parent)
                   QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
   while (it.hasNext()) {
-    QFile file(it.next());
+    it.next();
     QFileInfo fileinfo = it.fileInfo();
     QString canonicalPath = fileinfo.canonicalPath();
     QString fileName = fileinfo.fileName();
@@ -44,19 +44,3 @@ TSFSModel::TSFSModel(const QString &rootPath, QObject *parent)
     }
   }
 }
-
-// QStandardItem *TSFSModel::findElementByAbsolutePath(const QString &path,
-//                                                    QStandardItem *parent) {
-//  // Parent found
-//  if (parent->data(Qt::UserRole).toString() == path) {
-//    return parent;
-//  }
-//  // No parent found at all
-//  if (!parent->hasChildren())
-//    return nullptr;
-
-//  for (int i = 0; i < parent->rowCount(); i++) {
-//    QModelIndex idx = parent->index();
-//     findElementByAbsolutePath(path, ));
-//  }
-//}
