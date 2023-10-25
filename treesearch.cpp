@@ -34,6 +34,7 @@ void TreeSearch::initFSModel() {
   fsProxyModel->setSourceModel(fsModel);
   fsTreeView->setModel(fsProxyModel);
   fsTreeView->setUniformRowHeights(true);
+  fsTreeView->setSortingEnabled(true);
 }
 
 void TreeSearch::on_filterQuerySubmitted(const QString &query) {
