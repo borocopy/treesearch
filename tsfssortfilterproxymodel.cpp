@@ -10,7 +10,8 @@ bool TSFSSortFilterProxyModel::filterAcceptsRow(
 
   // Match current item
   QModelIndex itemIndex = sourceModel()->index(sourceRow, 0, sourceParent);
-  int matchResult = rx.indexIn(itemIndex.data(Qt::UserRole).toString());
+  int matchResult = rx.indexIn(
+      itemIndex.data(TSFSModel::ItemData::AbsoluteFilePath).toString());
   if (matchResult != -1)
     return true;
 
@@ -26,4 +27,26 @@ bool TSFSSortFilterProxyModel::filterAcceptsRow(
   }
 
   return result;
+}
+
+bool TSFSSortFilterProxyModel::lessThan(const QModelIndex &left,
+                                        const QModelIndex &right) const {
+  QString leftPath = sourceModel()
+                         ->data(left, TSFSModel::ItemData::AbsoluteFilePath)
+                         .toString();
+  QString rightPath = sourceModel()
+                          ->data(right, TSFSModel::ItemData::AbsoluteFilePath)
+                          .toString();
+  bool leftIsDir =
+      sourceModel()->data(left, TSFSModel::ItemData::IsDirectory).toBool();
+  bool rightIsDir =
+      sourceModel()->data(right, TSFSModel::ItemData::IsDirectory).toBool();
+
+  // Directories first
+  if (leftIsDir && !rightIsDir)
+    return false;
+  if (rightIsDir && !leftIsDir)
+    return true;
+
+  return leftPath.localeAwareCompare(rightPath) > 0;
 }

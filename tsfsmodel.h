@@ -16,6 +16,8 @@ public:
   QStandardItem *getRootElement();
   qsizetype countItemsInRootDir();
 
+  enum ItemData { AbsoluteFilePath = Qt::UserRole, IsDirectory };
+
 private:
   QStandardItem *rootElement;
   QStandardItem *findElementByAbsolutePath(const QString &path,

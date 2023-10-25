@@ -20,22 +20,25 @@ void TSFSWorker::buildFSTree() {
     QString fileName = fileinfo.fileName();
     // Create new item
     QStandardItem *item = new QStandardItem(fileName);
-    item->setData(fileinfo.absoluteFilePath(), Qt::UserRole);
+    item->setData(fileinfo.absoluteFilePath(),
+                  TSFSModel::ItemData::AbsoluteFilePath);
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
     // Set corresponding icon
     if (fileinfo.isDir()) {
       item->setIcon(QIcon::fromTheme("folder"));
+      item->setData(true, TSFSModel::ItemData::IsDirectory);
     } else {
       item->setIcon(QIcon::fromTheme("text-x-generic"));
+      item->setData(false, TSFSModel::ItemData::IsDirectory);
     }
 
     // Every absolutePath works as a UID so we can infer parent from it,
     // because QDirIterator will always first return a parent directory
     // before any of the directory children
     QModelIndexList parentIndex = fsModel->match(
-        rootElement->index(), Qt::UserRole, fileinfo.absolutePath(), 1,
-        Qt::MatchRecursive | Qt::MatchExactly);
+        rootElement->index(), TSFSModel::ItemData::AbsoluteFilePath,
+        fileinfo.absolutePath(), 1, Qt::MatchRecursive | Qt::MatchExactly);
 
     // Always has one and only one element
     QStandardItem *parent = fsModel->itemFromIndex(parentIndex.at(0));
