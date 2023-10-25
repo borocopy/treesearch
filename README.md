@@ -1,6 +1,8 @@
 # TreeSearch
 QT приложение для поиска и просмотра файлов в домашней директории пользователя.
-![treesearch preview](https://github.com/borocopy/treesearch/blob/master/image.png?raw=true)
+
+
+![treesearch preview](https://github.com/borocopy/treesearch/blob/main/image.png?raw=true)
 
 ## Сборка
 ```bash
