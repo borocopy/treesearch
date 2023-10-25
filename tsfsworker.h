@@ -10,6 +10,7 @@ public:
   explicit TSFSWorker(TSFSModel *model, QObject *parent = nullptr);
 
 signals:
+  void fsTreeRootDirectoryChildHasBeenProcessed();
   void fsTreeHasBeenBuilt();
 
 public slots:

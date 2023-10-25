@@ -1,6 +1,8 @@
 #ifndef TREESEARCH_H
 #define TREESEARCH_H
 
+#include <QLabel>
+#include <QProgressBar>
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -9,6 +11,7 @@
 #include "tsfssortfilterproxymodel.h"
 #include "tsfsworker.h"
 #include "tsheader.h"
+#include "tsprogress.h"
 
 class TreeSearch : public QWidget {
   Q_OBJECT
@@ -27,7 +30,8 @@ private:
   // Connect signals to slots
   void initSignalHandlers();
   // Widgets declarations
-  TSHeader *header;
+  TSHeader *headerWidget;
+  TSProgress *progressWidget;
   QTreeView *fsTreeView;
 
   // File System model

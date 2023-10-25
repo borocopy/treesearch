@@ -16,3 +16,11 @@ TSFSModel::TSFSModel(const QString &rootPath, QObject *parent)
 }
 
 QStandardItem *TSFSModel::getRootElement() { return rootElement; }
+
+qsizetype TSFSModel::countItemsInRootDir() {
+  QString rootPath = rootElement->data(Qt::UserRole).toString();
+  QDir rootDir(rootPath);
+  rootDir.setFilter(QDir::NoDotAndDotDot | QDir::Hidden | QDir::AllEntries |
+                    QDir::System);
+  return rootDir.count();
+}

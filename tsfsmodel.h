@@ -12,9 +12,9 @@ class TSFSModel : public QStandardItemModel {
   Q_OBJECT
 public:
   TSFSModel(const QString &rootPath, QObject *parent = nullptr);
-  QStandardItem *getRootElement();
 
-public slots:
+  QStandardItem *getRootElement();
+  qsizetype countItemsInRootDir();
 
 private:
   QStandardItem *rootElement;

@@ -23,6 +23,7 @@ void TSHeader::initUI() {
   headerLayout->addLayout(searchLayout);
 
   setLayout(headerLayout);
+  setMaximumHeight(80);
 }
 
 void TSHeader::on_filterQuerySubmit() {

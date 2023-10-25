@@ -3,7 +3,7 @@
 TreeSearch::TreeSearch(QWidget *parent) : QWidget(parent) {
   initUI();
   initFSModel();
-  connect(header, &TSHeader::filterQuerySubmitted, this,
+  connect(headerWidget, &TSHeader::filterQuerySubmitted, this,
           &TreeSearch::on_filterQuerySubmitted);
 }
 
@@ -15,11 +15,18 @@ void TreeSearch::initUI() {
   setWindowTitle("Дерево файловой системы");
 
   // Build UI
-  header = new TSHeader();
+  headerWidget = new TSHeader();
+  progressWidget = new TSProgress();
   fsTreeView = new QTreeView();
 
+  // Hide before FS Tree is fully loaded
+  fsTreeView->setHidden(true);
+
   QVBoxLayout *centralLayout = new QVBoxLayout();
-  centralLayout->addWidget(header);
+  centralLayout->setAlignment(Qt::AlignJustify | Qt::AlignTop);
+
+  centralLayout->addWidget(headerWidget);
+  centralLayout->addWidget(progressWidget);
   centralLayout->addWidget(fsTreeView);
 
   setLayout(centralLayout);
@@ -37,6 +44,12 @@ void TreeSearch::initFSModel() {
 
   connect(fsWorkerThread, &QThread::started, fsWorker,
           &TSFSWorker::buildFSTree);
+
+  // Show loading bar
+  progressWidget->setStepsTotal(fsModel->countItemsInRootDir());
+  connect(fsWorker, &TSFSWorker::fsTreeRootDirectoryChildHasBeenProcessed,
+          progressWidget, &TSProgress::on_directoryScanned);
+
   // FS tree built hook
   connect(fsWorker, &TSFSWorker::fsTreeHasBeenBuilt, this,
           &TreeSearch::on_fsTreeHasBeenBuilt);
@@ -49,6 +62,9 @@ void TreeSearch::on_fsTreeHasBeenBuilt() {
   fsTreeView->setModel(fsProxyModel);
   fsTreeView->setUniformRowHeights(true);
   fsTreeView->setSortingEnabled(true);
+
+  progressWidget->setHidden(true);
+  fsTreeView->setHidden(false);
 }
 
 void TreeSearch::on_filterQuerySubmitted(const QString &query) {

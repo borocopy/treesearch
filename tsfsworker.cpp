@@ -8,7 +8,8 @@ void TSFSWorker::buildFSTree() {
   QStandardItem *rootElement = fsModel->getRootElement();
   // Iterate over every file starting from rootPath
   QDirIterator it(rootElement->data(Qt::UserRole).toString(),
-                  QDir::NoDotAndDotDot | QDir::AllEntries | QDir::Hidden,
+                  QDir::NoDotAndDotDot | QDir::AllEntries | QDir::Hidden |
+                      QDir::System,
                   QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
   while (it.hasNext()) {
@@ -39,6 +40,10 @@ void TSFSWorker::buildFSTree() {
     // Always has one and only one element
     QStandardItem *parent = fsModel->itemFromIndex(parentIndex.at(0));
     parent->appendRow(item);
+
+    if (parent == rootElement) {
+      emit fsTreeRootDirectoryChildHasBeenProcessed();
+    }
   }
 
   emit fsTreeHasBeenBuilt();

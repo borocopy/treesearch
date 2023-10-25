@@ -21,14 +21,16 @@ SOURCES += \
     tsfsmodel.cpp \
     tsfssortfilterproxymodel.cpp \
     tsfsworker.cpp \
-    tsheader.cpp
+    tsheader.cpp \
+    tsprogress.cpp
 
 HEADERS += \
     treesearch.h \
     tsfsmodel.h \
     tsfssortfilterproxymodel.h \
     tsfsworker.h \
-    tsheader.h
+    tsheader.h \
+    tsprogress.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
